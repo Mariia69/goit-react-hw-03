@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
-import ContactForm from './components/ContactFrom/ContactForm'
-import SearchBox from './components/SearchBox/SearchBox'
-import ContactList from './components/ContactList/ContactList'
-import './App.css'
+import { useState, useEffect } from 'react';
+import './App.css';
+
+import ContactsList from './components/ContactList/ContactList'
+import ContactForm from './components/ContactForm/ContactForm';
+import SearchBox from './components/SearchBox/SearchBox';
+import { nanoid } from 'nanoid'
 
 const contactsList = [
 	{id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
@@ -16,47 +18,47 @@ const contactsList = [
 	const [nameToSearch, setNameToSearch] = useState("");
   
 	const [contacts, setContacts] = useState(() => {
-	  const savedContacts = JSON.parse(localStorage.getItem("contacts"))
+ const savedContacts = JSON.parse(localStorage.getItem("contacts"))
   
-	  if (savedContacts !== null) {
+ if (savedContacts !== null) {
 		return savedContacts;
-	  }
+ }
   
-	  return contactsList;
+ return contactsList;
 	});
   
 	const addContact = (newContact) => {
-	  setContacts((prevContacts) => {
-		  newContact.id = nanoid()
-		  return [...prevContacts, newContact]
+ setContacts((prevContacts) => {
+ newContact.id = nanoid()
+ return [...prevContacts, newContact]
 		});
 	};
   
 	const deleteContact = (id) => {
-	  setContacts((prevContacts) => {
+ setContacts((prevContacts) => {
 		return prevContacts.filter(contact => contact.id !== id)
-	  })
+ })
 	};
   
 	const filteredContacts = contacts.filter(contact => {
-	  return contact.name.toLowerCase().includes(nameToSearch.toLowerCase().trim())
+ return contact.name.toLowerCase().includes(nameToSearch.toLowerCase().trim())
 	});  
   
 	const handleChange = (event) => {
-	  setNameToSearch(event.target.value);
+ setNameToSearch(event.target.value);
 	};
   
 	useEffect(() => {
-	  localStorage.setItem("contacts", JSON.stringify(contacts))
+ localStorage.setItem("contacts", JSON.stringify(contacts))
 	}, [contacts]);
   
 	return (
-	  <>
+ <>
 		<h1>Phonebook</h1>
 		<ContactForm onAdd={addContact}></ContactForm>
 		<SearchBox handleChange={handleChange}></SearchBox>
 		<ContactsList data={filteredContacts} onDelete={deleteContact}></ContactsList>
-	  </>
+ </>
 	);
   }
   
