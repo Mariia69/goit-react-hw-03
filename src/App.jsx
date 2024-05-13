@@ -56,7 +56,7 @@ const contactsList = [
  <>
 		<h1>Phonebook</h1>
 		<ContactForm onAdd={addContact}></ContactForm>
-		<SearchBox handleChange={handleChange}></SearchBox>
+		<SearchBox onChange={handleChange}></SearchBox>
 		<ContactsList data={filteredContacts} onDelete={deleteContact}></ContactsList>
  </>
 	);
